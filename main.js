@@ -18,13 +18,10 @@ const textInput = document.getElementById("to-do-input");
 const inputButtonAdd = document.getElementById("add-input-button");
 const toDoList = document.getElementById("todo-list");
 
-//
-
 const lightMode = () => {
   bodyElement.style.backgroundColor = "#fefefe";
   dateParagraph.style.color = "#676767"
   projectH1.style.color = "#676767"
-  
 }
 
 const darkMode = () => {
@@ -35,10 +32,10 @@ const darkMode = () => {
 
 darkIcon.addEventListener("click", darkMode);
 lightIcon.addEventListener("click", lightMode);
-//
 
 const addIdea = () => {
   const createLi = document.createElement("li")
+  createLi.classList.add = "(ul-li)"
   toDoList.appendChild(createLi);
   createLi.innerText = textInput.value;
   textInput.value = "";
@@ -64,18 +61,16 @@ const addThrash = (li) => {
 }
 
 inputButtonAdd.addEventListener("click", () => {
-
   if (textInput.value === "") {
     inputButtonAdd.disabled = true;
   } else {
     addIdea();
   }
 });
-/*
-const createButtonTrash = document.getElementById("add-Button-trash");
 
-createButtonTrash.addEventListener("mouse-over", () => {
-  li
-})
-*/
+/* Seguramente tenga que crear un contador que vaya aumentando cada vez
+que haga click en inputButtonAdd. Así puedo relacionar ese contador con un 
+set-atribute a cada <li> junto con sus botones. De esa manera creo que es CompositionEventpuedo añadir esa idea a tarea por hacer o borrarla y no añadir todas. Aunque primero tengo que comprobar la reacción 
+de darle a un botón y ver qué pasa con todos los elementos <li> que est´ñen creados.*/
+
 
