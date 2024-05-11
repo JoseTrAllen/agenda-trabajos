@@ -4,6 +4,7 @@ const modeDiv = document.getElementById("mode-container");
 const darkIcon = document.getElementById("dark-mode");
 const lightIcon = document.getElementById("light-mode");
 const projectH1 = document.getElementById("span-h1")
+let id = 0;
 
 const date = new Date();
 /*const day = date.getDay();
@@ -37,7 +38,7 @@ lightIcon.addEventListener("click", lightMode);
 
 const addIdea = () => {
   const createLi = document.createElement("li")
-  createLi.classList.add = "(ul-li)"
+  createLi.classList.add("ul-li");
   toDoList.appendChild(createLi);
   createLi.innerText = textInput.value;
   textInput.value = "";
@@ -76,6 +77,8 @@ inputButtonAdd.addEventListener("click", () => {
     inputButtonAdd.disabled = true;
   } else {
     addIdea();
+    id++;
+    console.log(id);
   }
 });
 
