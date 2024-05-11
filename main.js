@@ -18,6 +18,8 @@ const textInput = document.getElementById("to-do-input");
 const inputButtonAdd = document.getElementById("add-input-button");
 const toDoList = document.getElementById("todo-list");
 
+const inProcessList = document.getElementById("in-process");
+
 const lightMode = () => {
   bodyElement.style.backgroundColor = "#fefefe";
   dateParagraph.style.color = "#676767"
@@ -50,6 +52,11 @@ const addButton = (li) => {
   createButtonAdd.classList.add("material-symbols-outlined");
   createButtonAdd.innerText = "add_task";
   li.appendChild(createButtonAdd);
+  createButtonAdd.addEventListener("click", () => {
+    console.log("Funciono");
+    li.remove();
+    inProcessList.appendChild(li);
+  })
 }
 
 const addThrash = (li) => {
@@ -58,6 +65,10 @@ const addThrash = (li) => {
   createButtonTrash.classList.add("material-symbols-outlined");
   createButtonTrash.innerText = "delete";
   li.appendChild(createButtonTrash);
+  createButtonTrash.addEventListener("click", () => {
+    console.log("Funciono");
+    li.remove();
+  })
 }
 
 inputButtonAdd.addEventListener("click", () => {
@@ -67,6 +78,9 @@ inputButtonAdd.addEventListener("click", () => {
     addIdea();
   }
 });
+
+
+
 
 /* Seguramente tenga que crear un contador que vaya aumentando cada vez
 que haga click en inputButtonAdd. Así puedo relacionar ese contador con un 

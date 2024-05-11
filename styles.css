@@ -118,7 +118,7 @@ section h1 {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  word-break: break-all;
+  word-break: auto-phrase;
   background-color: #1a1a1a;
   width: 400px;
   min-height: 400px;
