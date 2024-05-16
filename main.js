@@ -5,6 +5,9 @@ const darkIcon = document.getElementById("dark-mode");
 const lightIcon = document.getElementById("light-mode");
 const projectH1 = document.getElementById("span-h1")
 let id = 0;
+let state;// Estado puede ser idea, proceso, terminado.
+let array = [];
+
 
 const date = new Date();
 /*const day = date.getDay();
@@ -37,24 +40,41 @@ darkIcon.addEventListener("click", darkMode);
 lightIcon.addEventListener("click", lightMode);
 
 const addIdea = () => {
-  const createLi = document.createElement("li")
+  state = "idea"
+  const nuevoArray = {
+    nombre: textInput.value,
+    id: id,
+    estado: state
+  }
+  const createLi = document.createElement("li");
+  createLi.id = id;
   createLi.classList.add("ul-li");
+  createLi.setAttribute("estado", nuevoArray.estado);
   toDoList.appendChild(createLi);
   createLi.innerText = textInput.value;
-  textInput.value = "";
-
+  array.push(nuevoArray);
   addButton(createLi)
   addThrash(createLi)
 }
 
 const addButton = (li) => {
+  const nuevoArray = {
+    nombre: textInput.value,
+    id: id,
+    estado: state
+  }
+  state = "en proceso";
+  li.setAttribute("estado", nuevoArray.estado);
   const createButtonAdd = document.createElement("span");
   createButtonAdd.id = "add-Button-li";
   createButtonAdd.classList.add("material-symbols-outlined");
   createButtonAdd.innerText = "add_task";
   li.appendChild(createButtonAdd);
   createButtonAdd.addEventListener("click", () => {
-    console.log("Funciono");
+
+    console.log(array);
+    
+
     li.remove();
     inProcessList.appendChild(li);
   })
@@ -78,7 +98,8 @@ inputButtonAdd.addEventListener("click", () => {
   } else {
     addIdea();
     id++;
-    console.log(id);
+    textInput.value = "";
+    console.log(array);
   }
 });
 
