@@ -23,8 +23,13 @@ body {
   background-color: #111111;
   font-family: "Roboto Mono", monospace;
   color: whitesmoke;
-  max-width: 1440px;
+  max-width: 960px;
   margin: auto;
+}
+
+.landing-page{
+  display: block;
+  height: 100dvh;
 }
 
 header {
@@ -90,7 +95,7 @@ header {
 
 section {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
 }
 
@@ -191,5 +196,13 @@ li {
 }
 
 #add-Button-trash:active {
+  transform: scale(0.900);
+}
+
+#button-description:hover {
+  color: rgb(0, 255, 0);
+}
+
+#button-description:active {
   transform: scale(0.900);
 }

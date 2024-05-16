@@ -7,6 +7,7 @@ const projectH1 = document.getElementById("span-h1")
 let tasks = [];
 
 const date = new Date();
+const saveDate = date.toLocaleDateString('es-ES', {year: 'numeric', month: 'long', day: 'numeric'})
 /*const day = date.getDay();
 const month = date.getMonth() + 1;
 const year = date.getFullYear()
@@ -17,9 +18,8 @@ dateParagraph.innerText = `Hoy es ${completeDate}`;
 
 const textInput = document.getElementById("to-do-input");
 const inputButtonAdd = document.getElementById("add-input-button");
-const toDoList = document.getElementById("todo-list");
-
-const inProcessList = document.getElementById("in-process");
+const ideaList = document.getElementById("idea-list");
+const inProgressList = document.getElementById("inprogress")
 
 const lightMode = () => {
   bodyElement.style.backgroundColor = "#fefefe";
@@ -40,6 +40,7 @@ const addArray = (name) => {
   return {
     name: name,
     id: tasks.length,
+    date: date,
     state: "Idea"
   }
 }
@@ -54,7 +55,7 @@ const changeState = (dataArrayObject) => {
     if (task.id === dataArrayObject.id) {
       return {
         ...task,
-        state: "to-do"
+        state: "In-progress"
       }
     }
     return task;
@@ -71,16 +72,16 @@ const addIdea = () => {
   createLi.id = dataArrayObject.id;
   createLi.classList.add("ul-li");
   createLi.setAttribute("state", dataArrayObject.state);
-  toDoList.appendChild(createLi);
-  createLi.innerText = dataArrayObject.name;
+  ideaList.appendChild(createLi);
+  createLi.innerText = `${dataArrayObject.name}`;
   tasks.push(dataArrayObject);
-  addButton(createLi, dataArrayObject);
+  addButtonInProgress(createLi, dataArrayObject);
   addThrash(createLi, dataArrayObject); 
 }
 
-const addButton = (li, dataArrayObject) => {
+const addButtonInProgress = (li, dataArrayObject) => {
 
-  li.setAttribute("state", dataArrayObject.state);
+  li.dataset.state = "In-progress";
   const createButtonAdd = document.createElement("span");
   createButtonAdd.id = "add-Button-li";
   createButtonAdd.classList.add("material-symbols-outlined");
@@ -89,10 +90,20 @@ const addButton = (li, dataArrayObject) => {
   createButtonAdd.addEventListener("click", () => {
 
     li.remove();
-    inProcessList.appendChild(li);
+    createButtonAdd.remove();
+    addButtonDescription(li);
     changeState(dataArrayObject);
+    inProgressList.appendChild(li);
     console.log(tasks);
   })
+}
+
+const addButtonDescription = (li) => {
+  const createButtonDescription = document.createElement("span");
+  createButtonDescription.id = "button-description";
+  createButtonDescription.classList.add("material-symbols-outlined");
+  createButtonDescription.innerText = "description";
+  li.appendChild(createButtonDescription);
 }
 
 const addThrash = (li, dataArrayObject) => {
@@ -117,13 +128,5 @@ inputButtonAdd.addEventListener("click", () => {
     console.log(tasks);
   }
 });
-
-
-
-
-/* Seguramente tenga que crear un contador que vaya aumentando cada vez
-que haga click en inputButtonAdd. Así puedo relacionar ese contador con un 
-set-atribute a cada <li> junto con sus botones. De esa manera creo que es CompositionEventpuedo añadir esa idea a tarea por hacer o borrarla y no añadir todas. Aunque primero tengo que comprobar la reacción 
-de darle a un botón y ver qué pasa con todos los elementos <li> que est´ñen creados.*/
 
 
