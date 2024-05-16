@@ -4,10 +4,7 @@ const modeDiv = document.getElementById("mode-container");
 const darkIcon = document.getElementById("dark-mode");
 const lightIcon = document.getElementById("light-mode");
 const projectH1 = document.getElementById("span-h1")
-let id = 0;
-let state;// Estado puede ser idea, proceso, terminado.
-let array = [];
-
+let tasks = [];
 
 const date = new Date();
 /*const day = date.getDay();
@@ -39,32 +36,51 @@ const darkMode = () => {
 darkIcon.addEventListener("click", darkMode);
 lightIcon.addEventListener("click", lightMode);
 
-const addIdea = () => {
-  state = "idea"
-  const nuevoArray = {
-    nombre: textInput.value,
-    id: id,
-    estado: state
+const addArray = (name) => {
+  return {
+    name: name,
+    id: tasks.length,
+    state: "Idea"
   }
-  const createLi = document.createElement("li");
-  createLi.id = id;
-  createLi.classList.add("ul-li");
-  createLi.setAttribute("estado", nuevoArray.estado);
-  toDoList.appendChild(createLi);
-  createLi.innerText = textInput.value;
-  array.push(nuevoArray);
-  addButton(createLi)
-  addThrash(createLi)
 }
 
-const addButton = (li) => {
-  const nuevoArray = {
-    nombre: textInput.value,
-    id: id,
-    estado: state
-  }
-  state = "en proceso";
-  li.setAttribute("estado", nuevoArray.estado);
+const addNameTask = () => {
+  const taskName = textInput.value;
+  return addArray(taskName);
+}
+
+const changeState = (dataArrayObject) => {
+  tasks = tasks.map((task) => {
+    if (task.id === dataArrayObject.id) {
+      return {
+        ...task,
+        state: "to-do"
+      }
+    }
+    return task;
+  })
+}
+
+const removeObjectArray = (dataArrayObject) => {
+  return tasks = tasks.filter((task) => task.id !== dataArrayObject.id);
+}
+
+const addIdea = () => {
+  const createLi = document.createElement("li");
+  const dataArrayObject = addNameTask();
+  createLi.id = dataArrayObject.id;
+  createLi.classList.add("ul-li");
+  createLi.setAttribute("state", dataArrayObject.state);
+  toDoList.appendChild(createLi);
+  createLi.innerText = dataArrayObject.name;
+  tasks.push(dataArrayObject);
+  addButton(createLi, dataArrayObject);
+  addThrash(createLi, dataArrayObject); 
+}
+
+const addButton = (li, dataArrayObject) => {
+
+  li.setAttribute("state", dataArrayObject.state);
   const createButtonAdd = document.createElement("span");
   createButtonAdd.id = "add-Button-li";
   createButtonAdd.classList.add("material-symbols-outlined");
@@ -72,23 +88,23 @@ const addButton = (li) => {
   li.appendChild(createButtonAdd);
   createButtonAdd.addEventListener("click", () => {
 
-    console.log(array);
-    
-
     li.remove();
     inProcessList.appendChild(li);
+    changeState(dataArrayObject);
+    console.log(tasks);
   })
 }
 
-const addThrash = (li) => {
+const addThrash = (li, dataArrayObject) => {
   const createButtonTrash = document.createElement("span");
   createButtonTrash.id = "add-Button-trash";
   createButtonTrash.classList.add("material-symbols-outlined");
   createButtonTrash.innerText = "delete";
   li.appendChild(createButtonTrash);
   createButtonTrash.addEventListener("click", () => {
-    console.log("Funciono");
     li.remove();
+    removeObjectArray(dataArrayObject)
+    console.log(tasks);
   })
 }
 
@@ -97,9 +113,8 @@ inputButtonAdd.addEventListener("click", () => {
     inputButtonAdd.disabled = true;
   } else {
     addIdea();
-    id++;
     textInput.value = "";
-    console.log(array);
+    console.log(tasks);
   }
 });
 
